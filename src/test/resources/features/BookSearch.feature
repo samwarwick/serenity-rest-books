@@ -16,9 +16,9 @@ Feature: Search for books
       | totalItems | 1 			      		|
       | kind       | books#volumes			|
     And the response includes the following in any order
-      | items.volumeInfo.title 				| Steve Jobs          |
-      | items.volumeInfo.publisher 	    	| Simon and Schuster  |
-      | items.volumeInfo.pageCount 			| 630                 |
+      | items.volumeInfo.title              | Steve Jobs          |
+      | items.volumeInfo.publisher          | Simon and Schuster  |
+      | items.volumeInfo.pageCount          | 630                 |
 
   Scenario: Book title includes a subtitle
     Given a book with isbn 0750962917
