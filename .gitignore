@@ -3,4 +3,8 @@
 .settings
 /target/
 
+# Intellij files
+*.iml
+*.ipr
+*.iws
 .idea/
