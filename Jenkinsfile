@@ -12,14 +12,7 @@ node {
 		} else {
 			bat "${mvnHome}\\bin\\mvn clean verify -Dcucumber.options=\"--tags @smoke\""
 		}
-		publishHTML(target: [
-			reportName : 'Smoke',
-			reportDir:   'target/site/serenity',
-			reportFiles: 'index.html',
-			keepAll:     true,
-			alwaysLinkToLastBuild: true,
-			allowMissing: false
-		])
+		publishReport('Smoke')
     }
 	
     stage('REST') {
@@ -32,18 +25,22 @@ node {
 		} catch (err) {
 
 		} finally {
-				publishHTML(target: [
-					reportName : 'REST',
-					reportDir:   'target/site/serenity',
-					reportFiles: 'index.html',
-					keepAll:     true,
-					alwaysLinkToLastBuild: true,
-					allowMissing: false
-			])
+			publishReport('REST')
 		}
     }
    
     stage('Results') {
         junit '**/target/failsafe-reports/TEST-*.xml'
     }  
+}
+
+def publishReport(name) {
+	publishHTML(target: [
+		reportName:  name,
+		reportDir:   'target/site/serenity',
+		reportFiles: 'index.html',
+		keepAll:     true,
+		alwaysLinkToLastBuild: true,
+		allowMissing: false
+	])
 }
