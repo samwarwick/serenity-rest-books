@@ -8,9 +8,9 @@ node {
 	
 	stage('Smoke') {
 		if (isUnix()) {
-			sh "'${mvnHome}/bin/mvn' clean verify -Dcucumber.options=\"--tags @smoke\""
+			sh "'${mvnHome}/bin/mvn' clean verify -Dcucumber.filter.tags=\"@smoke\""
 		} else {
-			bat "${mvnHome}\\bin\\mvn clean verify -Dcucumber.options=\"--tags @smoke\""
+			bat "${mvnHome}\\bin\\mvn clean verify -Dcucumber.filter.tags=\"@smoke\""
 		}
 		publishReport('Smoke')
     }
