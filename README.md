@@ -1,6 +1,6 @@
 # Serenity REST Demo using Google Books API
 
-Sample project demonstrating the use of [Serenity-BDD](http://www.thucydides.info/) and [REST Assured](http://rest-assured.io/) to test the Google Books API.
+Sample project demonstrating the use of [Serenity-BDD](https://serenity-bdd.info/) and [REST Assured](https://rest-assured.io/) to test the Google Books API.
 Also includes a Jenkinsfile to enable execution in a Jenkins pipeline.
 
 To run all tests:
@@ -10,7 +10,7 @@ mvn clean verify
 
 To run a single smoke test:
 ```
-mvn clean verify -Dcucumber.options="--tags @smoke"
+mvn clean verify -Dcucumber.filter.tags="@smoke"
 ```
 
 To view the test report open `target/site/serenity/index.html`.
