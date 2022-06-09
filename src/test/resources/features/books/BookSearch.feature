@@ -24,3 +24,9 @@ Feature: Search for books
     Given a book with isbn 0750962917
     When I search for the book
     Then the book title should be "The Union-Castle Line: Sailing Like Clockwork"
+
+  Scenario: Retrieve book by volume ID
+    Given a book with volume ID XQVpuQEACAAJ
+    When I retrieve the book
+    Then the book title should be "QE2"
+    And the book subtitle should be "The Cunard Line Flagship, Queen Elizabeth 2"

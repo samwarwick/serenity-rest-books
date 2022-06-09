@@ -1,6 +1,6 @@
 package io.filenew.demos.books.steps;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -23,22 +23,41 @@ public class BooksSteps {
 	private ValidatableResponse json;
 	private RequestSpecification request;
 
-	private String GET_BOOK_BY_ISBN_ENDPOINT = "https://www.googleapis.com/books/v1/volumes";
+	private final String GET_BOOK_VOLUME_ENDPOINT = "https://www.googleapis.com/books/v1/volumes";
+
+	private boolean singleVolume = false;
 
 	@Given("^a book with (?:isbn|ISBN) (.*)$")
 	public void book_exists_with_isbn(String isbn){
 		request = rest().given().param("q", "isbn:" + isbn);
 	}
 
+	@Given("^a book with volume ID (.*)$")
+	public void book_exists_with_volume_id(String volumeId){
+		request = rest().given().pathParam("volumeId", volumeId);
+	}
+
 	@When("^.* search for the book$")
 	public void search_for_book(){
-		response = request.when().get(GET_BOOK_BY_ISBN_ENDPOINT);
+		response = request.when().get(GET_BOOK_VOLUME_ENDPOINT);
+		json = response.then().statusCode(200);
+	}
+
+	@When("^.* retrieve the book$")
+	public void get_book_by_volume_id(){
+		singleVolume = true;
+		response = request.when().get(GET_BOOK_VOLUME_ENDPOINT + "/{volumeId}");
 		json = response.then().statusCode(200);
 	}
 	
 	@Then("^the book title should be \"(.*)\"$")
 	public void verify_title(String title) {
-		json.body("items.volumeInfo.title", equalTo(Arrays.asList(title)));
+		verify_property("volumeInfo.title", title);
+	}
+
+	@Then("^the book subtitle should be \"(.*)\"$")
+	public void verify_subtitle(String subtitle) {
+		verify_property("volumeInfo.subtitle", subtitle);
 	}
 	
 	@Then("^the response includes the following$")
@@ -62,6 +81,14 @@ public class BooksSteps {
 			else{
 				json.body(field.getKey(), containsInAnyOrder(field.getValue()));
 			}
+		}
+	}
+
+	public void verify_property(String name, String value) {
+		if (singleVolume) {
+			json.body( name, equalTo(value));
+		} else {
+			json.body( "items." + name, equalTo(Collections.singletonList(value)));
 		}
 	}
 }
