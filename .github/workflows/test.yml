@@ -1,6 +1,7 @@
-name: Continuous Integration
+name: Test
 
-on: [push]
+on: 
+  workflow_dispatch:
 
 jobs:
   build:
@@ -17,10 +18,10 @@ jobs:
         java-version: '21'
        
     - name: Build and test
-      run: mvn clean verify -Dcucumber.filter.tags="@smoke"
+      run: mvn clean verify
 
     - name: Archive Serenity report
       uses: actions/upload-artifact@v4
       with:
-        name: serenity-report-smoke
+        name: serenity-report
         path: target/site/serenity
