@@ -18,3 +18,9 @@ jobs:
        
     - name: Build and test
       run: mvn clean verify -Dcucumber.filter.tags="@smoke"
+
+    - name: Archive test reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: serenity-reports
+        path: target/site/serenity
