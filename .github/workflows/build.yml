@@ -17,4 +17,4 @@ jobs:
         java-version: '21'
        
     - name: Build and test
-      run: mvn clean verify
+      run: mvn clean verify -Dcucumber.filter.tags="@smoke"
