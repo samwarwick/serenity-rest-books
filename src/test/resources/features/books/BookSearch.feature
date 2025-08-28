@@ -18,6 +18,7 @@ Feature: Search for books
     And the response includes the following in any order
       | items.volumeInfo.title              | Shipwrecks of the P&o Line |
       | items.volumeInfo.publisher          | History Press              |
+      | items.volumeInfo.publishedDate      | 2017-06-26                 |
       | items.volumeInfo.pageCount          | 180                        |
 
   Scenario: Book title includes a subtitle
